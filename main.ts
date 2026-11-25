@@ -6,7 +6,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 const ENTRY =
-  "In Gloomsville, drizzle at 7am, umbrella sales up 400%, and the 8:15 bus is on time for once — miracles happen, commuters.";
+  "In Mizzleford, light rain all morning, the 8:15 bus is on time for once, and the station pigeons have filed a complaint about the drizzle.";
 
 const MAX_CHARS = 140;
 
@@ -20,6 +20,12 @@ function validate(text: string): void {
   }
   if (text.includes("\n")) {
     throw new Error("entry must be a single line");
+  }
+  if (text !== text.trim()) {
+    throw new Error("entry must not have leading or trailing whitespace");
+  }
+  if (!/[.!?]$/.test(text)) {
+    throw new Error("entry must end with terminal punctuation");
   }
   // Must round-trip as valid UTF-8 text.
   if (Buffer.from(text, "utf8").toString("utf8") !== text) {
